@@ -118,11 +118,53 @@ void showAllAktor(ListAktor LA)
 //
 // Film
 // Tambah Film di paling awal
-void insertFirstFilm(ListFilm &LF, adrFilm p) {};
+void insertFirstFilm(ListFilm &LF, adrFilm p) 
+{
+    if (LF.first == NULL)
+    {
+        LF.first = LF.last = p;
+    }
+    else
+    {
+        p->next = LF.first;
+        LF.first->prev = p;
+        LF.first = p;
+    }
+};
+
 // Tambah Film di paling Akhir
-void insertLastFilm(ListFilm &LF, adrFilm p) {};
+void insertLastFilm(ListFilm &LF, adrFilm p) 
+{
+    if (LF.first == NULL)
+    {
+        LF.first = LF.last = p;
+    }
+    else
+    {
+        LF.last->next = p;
+        p->prev = LF.last;
+        LF.last = p;
+    }
+};
+
 // Hapus Film Pertama
-void deleteFirstFilm(ListFilm &LF, adrFilm &p) {};
+void deleteFirstFilm(ListFilm &LF, adrFilm &p) 
+{
+    p = LF.first;
+    if (p == NULL)
+        return;
+    if (LF.first == LF.last)
+    {
+        LF.first = LF.last = NULL;
+    }
+    else
+    {
+        LF.first = p->next;
+        LF.first->prev = NULL;
+        p->next = NULL;
+    }
+};
+
 // Hapus Film Terakhir
 void deleteLastFilm(ListFilm &LF, adrFilm &p) {};
 // Hapus Film berdasarkan Id

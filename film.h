@@ -28,7 +28,7 @@ typedef struct elmAktor *adrAktor;
 typedef struct elmFilm *adrFilm;
 typedef struct elmRelasi *adrRelasi;
 
-// List Aktor
+// List Aktor (List Child - independen / Single Linked List)
 struct elmAktor
 {
     Aktor info;
@@ -40,7 +40,7 @@ struct ListAktor
     adrAktor first;
 };
 
-// List child (film)
+// List film (List parent - memiliki relasi / Double Linked List)
 
 struct elmFilm
 {
@@ -56,74 +56,81 @@ struct ListFilm
     adrFilm last;
 };
 
-// List relasi
+// List relasi (Menunjuk ke aktor)
 struct elmRelasi
 {
-    adrAktor toAktor;
+    adrAktor toAktor; // pointer ke aktor
     adrRelasi next;
 };
 
+//Fungsi dan Prosedur
+
+// 0. Membuat List & Elemen Baru
 void createListAktor(ListAktor &LA); // Buat List Aktor Baru
 void createListFilm(ListFilm &LF);   // Buat List Film Baru
+adrAktor newAktor(Aktor x);         // Buat Node Aktor Baru
+adrFilm newFilm(Film x);             // Buat Node Film Baru
+adrRelasi newRelasi(adrAktor pA);    // Buat Node Relasi Baru
 
-// Tambah Aktor/Film/Relasi Baru
-adrAktor newAktor(Aktor x);
-adrFilm newFilm(Film x);
-adrRelasi newRelasi(adrAktor pA);
+// 1. Manajemen aktor (list child)
+// Insert First & last (Poin 1 & 6)
+void insertFirstAktor(ListAktor &LA, adrAktor p);
+void insertLastAktor(ListAktor &LA, adrAktor p);
 
-// Aktor (SLL)
-void insertFirstAktor(ListAktor &LA, adrAktor p);               // Poin 1 & 6. Tambah Aktor di paling awal
-void insertLastAktor(ListAktor &LA, adrAktor p);                // Poin 1 & 6. Tambah Aktor di paling akhir
-void deleteFirstAktor(ListAktor &LA, adrAktor &p);              // Hapus Aktor Pertama
-void deleteLastAktor(ListAktor &LA, adrAktor &p);               // Hapus Aktor Terakhir
-void deleteAktorById(ListAktor &LA, ListFilm &LF, int idAktor); // Hapus Aktor Berdasarkan Id
-adrAktor findAktorById(ListAktor LA, int idAktor);              // Cari Aktor berdasarkan Id
-void showAllAktor(ListAktor LA);                                // Tampilkan Semua Aktor
-
-// Film (DLL)
-void insertFirstFilm(ListFilm &LF, adrFilm p);  // Poin 1 & 6.Tambah Film di paling awal
-void insertLastFilm(ListFilm &LF, adrFilm p);   // Poin 1 & 6.Tambah Film di paling Akhir
-void deleteFirstFilm(ListFilm &LF, adrFilm &p); // Hapus Film Pertama
-void deleteLastFilm(ListFilm &LF, adrFilm &p);  // Hapus Film Terakhir
-void deleteFilmById(ListFilm &LF, int idFilm);  // Hapus Film berdasarkan Id
-adrFilm findFilmById(ListFilm LF, int idFilm);  // Cari Film berdasarkan Id
-void showAllFilm(ListFilm LF);                  // Tampilkan Semua Film
-
-// Poin 3. Menghapus data parent beserta relasinya
+// Delete (Poin 3: Menghapus data child beserta relasinya)
+void deleteFirstAktor(ListAktor &LA, adrAktor &p);
+void deleteLastAktor(ListAktor &LA, adrAktor &p);
 void deleteAktorById(ListAktor &LA, ListFilm &LF, int idAktor);
+
+// Search & Show (Poin 5: Mencari data child)
+adrAktor findAktorById(ListAktor LA, int idAktor);
+void showAllAktor(ListAktor LA);
+
+
+// 2. Manajemen film (list parent)
+// Insert First & last (Poin 1)
+void insertFirstFilm(ListFilm &LF, adrFilm p);
+void insertLastFilm(ListFilm &LF, adrFilm p);
+
+// Delete (Poin 3: Menghapus data parent beserta relasinya)
+void deleteFirstFilm(ListFilm &LF, adrFilm &p);
+void deleteLastFilm(ListFilm &LF, adrFilm &p);
 void deleteFilmById(ListFilm &LF, int idFilm);
 
-// Poin 4. Mencari data parent
-adrAktor findAktorById(ListAktor LA, int idAktor);
-
-// Poin 5. Mencari data child
+// Search & Show (Poin 4: Mencari data parent)
 adrFilm findFilmById(ListFilm LF, int idFilm);
+void showAllFilm(ListFilm LF); // Poin 2: show all parent
 
-// Relasi
-// Poin 7. Menghubungkan Film dengan Aktor
+
+// 3. Manajemen relasi
+// Poin 7. menghubungkan parent ke child
 void connectFilmAktor(ListFilm &LF, ListAktor &LA, int idFilm, int idAktor);
-// Poin 7. Menghubungkan Aktor dengan Film
-void connectAktorFilm(ListAktor &LA, ListFilm &LF, int idAktor, int idFilm);
 
 // Poin 9. Mencari data child pada parent tertentu
-adrFilm findFilmByAktor(ListFilm LF, ListAktor LA, int idAktor);
+adrFilm findAktorInFilm(ListFilm LF, int idFilm, int idAktor);
 
-// Poin 10. Menghapus data child pada parent tertentu beserta relasinya
-void deleteFilmByAktor(ListFilm &LF, ListAktor &LA, int idAktor, int idFilm);
+// Point 10. Menghapus data child pada parent tertentu
+// Menghapus aktor x dari film y
+void deleteAktorFromFilm(ListFilm &LF, int idFilm, int idAktor);
 
 // Poin 11. Menghitung jumlah data child dari parent tertentu
-int countFilmByAktor(ListFilm LF, ListAktor LA, int idAktor);
+int countAktorInFilm(ListFilm LF, int idFilm);
 
-// Poin 12. Main program
+
+// Fitur Tambahan
+// Poin 8. Menampilkan data parent beserta child
+void showFilmWithAktor(ListFilm LF);
+
+// Menampilkan data film yang dibintangi oleh aktor tertentu
+void showFilmByAktor(ListFilm LF, ListAktor LA, int idAktor);
+
+// Menampilkan data aktor yang membintangi film tertentu
+void showAktorByFilm(ListFilm LF, int idFilm);
+
+// Poin i. Menampilkan Top 1 Akotr & Aktris
+void showTopAktorDanAktris(ListFilm LF, ListAktor LA);
+
+// Main Program
 int main();
-
-// Tampilkan
-void showFilmWithAktor(ListFilm LF);                          // Poin 8. Tampilkan Film beserta Aktor
-void showFilmByAktor(ListFilm LF, ListAktor LA, int idAktor); // Poin 8. Tampilkan Film Berdasarkan Aktor
-void showAktorByFilm(ListFilm LF, int idFilm);                // Poin 8. Tampilkan Aktor Berdasarkan Film
-void showAktorWithFilm(ListAktor LA, ListFilm LF);          //   Poin 8. Tampilkan aktor beserta Film
-
-// Top
-void showTopAktorDanAktris(ListFilm LF, ListAktor LA); // Tampilkan Aktor paling ketceh
 
 #endif

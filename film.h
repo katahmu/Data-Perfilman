@@ -63,12 +63,12 @@ struct elmRelasi
     adrRelasi next;
 };
 
-//Fungsi dan Prosedur
+// Fungsi dan Prosedur
 
 // 0. Membuat List & Elemen Baru
 void createListAktor(ListAktor &LA); // Buat List Aktor Baru
 void createListFilm(ListFilm &LF);   // Buat List Film Baru
-adrAktor newAktor(Aktor x);         // Buat Node Aktor Baru
+adrAktor newAktor(Aktor x);          // Buat Node Aktor Baru
 adrFilm newFilm(Film x);             // Buat Node Film Baru
 adrRelasi newRelasi(adrAktor pA);    // Buat Node Relasi Baru
 
@@ -86,7 +86,6 @@ void deleteAktorById(ListAktor &LA, ListFilm &LF, int idAktor);
 adrAktor findAktorById(ListAktor LA, int idAktor);
 void showAllAktor(ListAktor LA);
 
-
 // 2. Manajemen film (list parent)
 // Insert First & last (Poin 1)
 void insertFirstFilm(ListFilm &LF, adrFilm p);
@@ -101,7 +100,6 @@ void deleteFilmById(ListFilm &LF, int idFilm);
 adrFilm findFilmById(ListFilm LF, int idFilm);
 void showAllFilm(ListFilm LF); // Poin 2: show all parent
 
-
 // 3. Manajemen relasi
 // Poin 7. menghubungkan parent ke child
 void connectFilmAktor(ListFilm &LF, ListAktor &LA, int idFilm, int idAktor);
@@ -114,23 +112,22 @@ adrFilm findAktorInFilm(ListFilm LF, int idFilm, int idAktor);
 void deleteAktorFromFilm(ListFilm &LF, int idFilm, int idAktor);
 
 // Poin 11. Menghitung jumlah data child dari parent tertentu
-int countAktorInFilm(ListFilm LF, int idFilm);
-
+int countAktorInFilm(adrFilm pFilm);
 
 // Fitur Tambahan
 // Poin 8. Menampilkan data parent beserta child
-void showFilmWithAktor(ListFilm LF);
+void showfilmByAktor(ListFilm LF, ListAktor LA, int idAktor);
 
 // Menampilkan data film yang dibintangi oleh aktor tertentu
-void showFilmByAktor(ListFilm LF, ListAktor LA, int idAktor);
+void showFilmWithAktor(ListFilm LF);
 
 // Menampilkan data aktor yang membintangi film tertentu
-void showAktorByFilm(ListFilm LF, int idFilm);
+void showAktorWithFilm(ListAktor LA, ListFilm LF, int idFilm);
 
 // Poin i. Menampilkan Top 1 Akotr & Aktris
 void showTopAktorDanAktris(ListFilm LF, ListAktor LA);
 
-// Main Program
-int main();
-
+//Generate ID 
+int generateAktorId(ListAktor LA);
+int generateFilmId(ListFilm LF);
 #endif

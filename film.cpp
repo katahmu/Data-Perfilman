@@ -38,12 +38,11 @@ adrRelasi newRelasi(adrAktor pA)
     return r;
 }
 
-
 // 1. Manajemen Aktor // Single linked list
 // Tambah Aktor ke paling awal
 void insertFirstAktor(ListAktor &LA, adrAktor p)
 {
-    if (LA.first == NULL) 
+    if (LA.first == NULL)
     {
         LA.first = p;
     }
@@ -89,11 +88,14 @@ void deleteLastAktor(ListAktor &LA, adrAktor &p)
     if (LA.first == NULL)
     {
         p = NULL;
-    } else if (LA.first->next == NULL)
+    }
+    else if (LA.first->next == NULL)
     {
         p = LA.first;
         LA.first = NULL;
-    } else {
+    }
+    else
+    {
         adrAktor q = LA.first;
         while (q->next->next != NULL)
         {
@@ -105,7 +107,7 @@ void deleteLastAktor(ListAktor &LA, adrAktor &p)
 }
 
 // Hapus Aktor berdasrkan Id
-void deleteAktorById(ListAktor &LA, ListFilm &LF, int idAktor) 
+void deleteAktorById(ListAktor &LA, ListFilm &LF, int idAktor)
 {
     // 1. Hapus relasi di film dulu
     adrFilm f = LF.first;
@@ -117,12 +119,17 @@ void deleteAktorById(ListAktor &LA, ListFilm &LF, int idAktor)
 
     // 2. Hapus aktor dari list induk
     adrAktor p = findAktorById(LA, idAktor);
-    if (p != NULL) {
-        if (p == LA.first) {
+    if (p != NULL)
+    {
+        if (p == LA.first)
+        {
             deleteFirstAktor(LA, p);
-        } else {
+        }
+        else
+        {
             adrAktor prev = LA.first;
-            while (prev->next != p) {
+            while (prev->next != p)
+            {
                 prev = prev->next;
             }
             prev->next = p->next;
@@ -135,14 +142,15 @@ void deleteAktorById(ListAktor &LA, ListFilm &LF, int idAktor)
 adrAktor findAktorById(ListAktor LA, int idAktor)
 {
     adrAktor p = LA.first;
-    while (p != NULL) 
+    while (p != NULL)
     {
-        if (p->info.id == idAktor) 
+        if (p->info.id == idAktor)
         {
             return p;
         }
         p = p->next;
     }
+    return NULL;
 }
 
 // Tampilkan semua aktor
@@ -152,8 +160,8 @@ void showAllAktor(ListAktor LA)
     cout << "=== Daftar Aktor & Aktris ===\n";
     while (p != NULL)
     {
-        cout << "[" << p->info.id << "] " << p->info.nama 
-             << " (" << p->info.gender << "), " 
+        cout << "[" << p->info.id << "] " << p->info.nama
+             << " (" << p->info.gender << "), "
              << p->info.umur << " thn - " << p->info.agensi << endl;
         p = p->next;
     }
@@ -162,13 +170,14 @@ void showAllAktor(ListAktor LA)
 
 // 2. Manajemen Film // Double linked list
 // Tambah Film di paling awal
-void insertFirstFilm(ListFilm &LF, adrFilm p) 
+void insertFirstFilm(ListFilm &LF, adrFilm p)
 {
     if (LF.first == NULL)
     {
         LF.first = p;
         LF.last = p;
-    } else
+    }
+    else
     {
         p->next = LF.first;
         LF.first->prev = p;
@@ -177,7 +186,7 @@ void insertFirstFilm(ListFilm &LF, adrFilm p)
 }
 
 // Tambah Film di paling Akhir
-void insertLastFilm(ListFilm &LF, adrFilm p) 
+void insertLastFilm(ListFilm &LF, adrFilm p)
 {
     if (LF.first == NULL)
     {
@@ -193,7 +202,7 @@ void insertLastFilm(ListFilm &LF, adrFilm p)
 }
 
 // Hapus Film Pertama
-void deleteFirstFilm(ListFilm &LF, adrFilm &p) 
+void deleteFirstFilm(ListFilm &LF, adrFilm &p)
 {
     p = LF.first;
     if (p != NULL)
@@ -213,7 +222,8 @@ void deleteFirstFilm(ListFilm &LF, adrFilm &p)
 }
 
 // Hapus Film Terakhir
-void deleteLastFilm(ListFilm &LF, adrFilm &p) {
+void deleteLastFilm(ListFilm &LF, adrFilm &p)
+{
     p = LF.last;
     if (p != NULL)
     {
@@ -232,24 +242,32 @@ void deleteLastFilm(ListFilm &LF, adrFilm &p) {
 }
 
 // Hapus Film berdasarkan Id
-void deleteFilmById(ListFilm &LF, int idFilm) {
+void deleteFilmById(ListFilm &LF, int idFilm)
+{
     adrFilm p = findFilmById(LF, idFilm);
-    
-    if (p != NULL) {
+
+    if (p != NULL)
+    {
         // Hapus semua relasi di dalamnya dulu (Memory Clean up)
         adrRelasi r = p->firstRel;
-        while(r != NULL) {
+        while (r != NULL)
+        {
             adrRelasi temp = r;
             r = r->next;
             delete temp;
         }
 
         // Hapus Node Film
-        if (p == LF.first) {
+        if (p == LF.first)
+        {
             deleteFirstFilm(LF, p);
-        } else if (p == LF.last) {
+        }
+        else if (p == LF.last)
+        {
             deleteLastFilm(LF, p);
-        } else {
+        }
+        else
+        {
             // Delete Middle (DLL)
             p->prev->next = p->next;
             p->next->prev = p->prev;
@@ -260,26 +278,29 @@ void deleteFilmById(ListFilm &LF, int idFilm) {
 }
 
 // Cari Film berdasarkan Id
-adrFilm findFilmById(ListFilm LF, int idFilm) {
+adrFilm findFilmById(ListFilm LF, int idFilm)
+{
     adrFilm p = LF.first;
-    while (p != NULL) 
+    while (p != NULL)
     {
-        if (p->info.id == idFilm) 
+        if (p->info.id == idFilm)
         {
             return p;
         }
         p = p->next;
     }
+    return NULL;
 }
 
 // Tampilkan Semua Film
-void showAllFilm(ListFilm LF) {
+void showAllFilm(ListFilm LF)
+{
     adrFilm p = LF.first;
     cout << "=== Daftar Film ===" << endl;
     while (p != NULL)
     {
-        cout << "[" << p->info.id << "] " << p->info.judul 
-             << " - " << p->info.genre 
+        cout << "[" << p->info.id << "] " << p->info.judul
+             << " - " << p->info.genre
              << " (Rating: " << p->info.rating << ")" << endl;
         p = p->next;
     }
@@ -288,34 +309,45 @@ void showAllFilm(ListFilm LF) {
 
 // 3. Manajemen Relasi
 // Menghubungkan Film dengan Aktor
-void connectFilmAktor(ListFilm &LF, ListAktor &LA, int idFilm, int idAktor) {
+void connectFilmAktor(ListFilm &LF, ListAktor &LA, int idFilm, int idAktor)
+{
     adrFilm pFilm = findFilmById(LF, idFilm);
     adrAktor pAktor = findAktorById(LA, idAktor);
 
-    if (pFilm != NULL && pAktor != NULL) {
+    if (pFilm != NULL && pAktor != NULL)
+    {
         // Cek dulu apakah sudah ada relasi agar tidak duplikat
-        if (findAktorInFilm(LF, idFilm, idAktor) == NULL) {
+        if (findAktorInFilm(LF, idFilm, idAktor) == NULL)
+        {
             adrRelasi r = newRelasi(pAktor);
             // Insert First Relasi
             r->next = pFilm->firstRel;
             pFilm->firstRel = r;
-            cout << "Berhasil menghubungkan " << pAktor->info.nama 
+            cout << "Berhasil menghubungkan " << pAktor->info.nama
                  << " ke film " << pFilm->info.judul << endl;
-        } else {
+        }
+        else
+        {
             cout << "Aktor tersebut sudah ada di film ini!" << endl;
         }
-    } else {
+    }
+    else
+    {
         cout << "ID Film atau ID Aktor tidak valid." << endl;
     }
 }
 
 // Mencari aktor membintangi film apa saja
-adrFilm findAktorInFilm(ListFilm LF, int idFilm, int idAktor) {
+adrFilm findAktorInFilm(ListFilm LF, int idFilm, int idAktor)
+{
     adrFilm pFilm = findFilmById(LF, idFilm);
-    if (pFilm != NULL) {
+    if (pFilm != NULL)
+    {
         adrRelasi r = pFilm->firstRel;
-        while (r != NULL) {
-            if (r->toAktor->info.id == idAktor) {
+        while (r != NULL)
+        {
+            if (r->toAktor->info.id == idAktor)
+            {
                 return pFilm;
             }
             r = r->next;
@@ -325,22 +357,29 @@ adrFilm findAktorInFilm(ListFilm LF, int idFilm, int idAktor) {
 }
 
 // Menghapus aktor dari film tertentu
-void deleteAktorFromFilm(ListFilm &LF, int idFilm, int idAktor) {
+void deleteAktorFromFilm(ListFilm &LF, int idFilm, int idAktor)
+{
     adrFilm pFilm = findFilmById(LF, idFilm);
-    if (pFilm != NULL) {
+    if (pFilm != NULL)
+    {
         adrRelasi r = pFilm->firstRel;
         adrRelasi prev = NULL;
 
-        while (r != NULL) {
-            if (r->toAktor->info.id == idAktor) {
+        while (r != NULL)
+        {
+            if (r->toAktor->info.id == idAktor)
+            {
                 // Ketemu, hapus
-                if (prev == NULL) { // Hapus elemen pertama
+                if (prev == NULL)
+                { // Hapus elemen pertama
                     pFilm->firstRel = r->next;
-                } else { // Hapus elemen tengah/akhir
+                }
+                else
+                { // Hapus elemen tengah/akhir
                     prev->next = r->next;
                 }
                 delete r;
-                cout << "Aktor dengan ID " << idAktor 
+                cout << "Aktor dengan ID " << idAktor
                      << " telah dihapus dari film " << pFilm->info.judul << endl;
                 return;
             }
@@ -351,10 +390,12 @@ void deleteAktorFromFilm(ListFilm &LF, int idFilm, int idAktor) {
 }
 
 // Menghitung jumlah aktor dalam sebuah film
-int countAktorInFilm(adrFilm pFilm) {
+int countAktorInFilm(adrFilm pFilm)
+{
     int count = 0;
     adrRelasi r = pFilm->firstRel;
-    while (r != NULL) {
+    while (r != NULL)
+    {
         count++;
         r = r->next;
     }
@@ -363,16 +404,22 @@ int countAktorInFilm(adrFilm pFilm) {
 
 // 4. Tampilan
 // Tampilkan Film beserta Aktor
-void showFilmWithAktor(ListFilm LF) {
+void showFilmWithAktor(ListFilm LF)
+{
     adrFilm p = LF.first;
     cout << "=== DAFTAR FILM & PEMAINNYA ===" << endl;
-    while (p != NULL) {
+    while (p != NULL)
+    {
         cout << "Film: " << p->info.judul << endl;
         adrRelasi r = p->firstRel;
-        if (r == NULL) {
+        if (r == NULL)
+        {
             cout << "   (Belum ada pemain)" << endl;
-        } else {
-            while (r != NULL) {
+        }
+        else
+        {
+            while (r != NULL)
+            {
                 cout << "   - " << r->toAktor->info.nama << endl;
                 r = r->next;
             }
@@ -383,16 +430,22 @@ void showFilmWithAktor(ListFilm LF) {
 }
 
 // Tampilkan Film dengan aktor
-void showFilmByAktor(ListAktor LA, ListFilm LF, int idAktor) {
+void showFilmByAktor(ListAktor LA, ListFilm LF, int idAktor)
+{
     adrFilm p = LF.first;
     cout << "=== DAFTAR FILM & PEMAINNYA ===" << endl;
-    while (p != NULL) {
+    while (p != NULL)
+    {
         cout << "Film: " << p->info.judul << endl;
         adrRelasi r = p->firstRel;
-        if (r == NULL) {
+        if (r == NULL)
+        {
             cout << "   (Belum ada pemain)" << endl;
-        } else {
-            while (r != NULL) {
+        }
+        else
+        {
+            while (r != NULL)
+            {
                 cout << "   - " << r->toAktor->info.nama << endl;
                 r = r->next;
             }
@@ -403,51 +456,66 @@ void showFilmByAktor(ListAktor LA, ListFilm LF, int idAktor) {
 }
 
 // Tampilkan film yang dibintangi oleh aktor tertentu
-void showfilmByAktor(ListFilm LF, ListAktor LA, int idAktor) {
+void showfilmByAktor(ListFilm LF, ListAktor LA, int idAktor)
+{
     adrAktor pAktor = findAktorById(LA, idAktor);
-    if (pAktor != NULL) {
+    if (pAktor != NULL)
+    {
         cout << "Film yang dibintangi " << pAktor->info.nama << ":" << endl;
         bool found = false;
-        
+
         adrFilm p = LF.first;
-        while (p != NULL) {
+        while (p != NULL)
+        {
             // Cek relasi di dalam setiap film
             adrRelasi r = p->firstRel;
-            while (r != NULL) {
-                if (r->toAktor == pAktor) { // Cek pointer 
+            while (r != NULL)
+            {
+                if (r->toAktor == pAktor)
+                { // Cek pointer
                     cout << "- " << p->info.judul << " (" << p->info.genre << ")" << endl;
                     found = true;
-                    break; 
+                    break;
                 }
                 r = r->next;
             }
             p = p->next;
         }
-        if (!found) cout << "(Tidak ada film)" << endl;
-    } else {
+        if (!found)
+            cout << "(Tidak ada film)" << endl;
+    }
+    else
+    {
         cout << "Aktor tidak ditemukan." << endl;
     }
 }
 
 // Tampilkan aktor yang membintangi film tertentu
-void showAktorWithFilm(ListAktor LA, ListFilm LF, int idFilm) {
+void showAktorWithFilm(ListAktor LA, ListFilm LF, int idFilm)
+{
     adrFilm pFilm = findFilmById(LF, idFilm);
-    if (pFilm != NULL) {
+    if (pFilm != NULL)
+    {
         cout << "Aktor yang membintangi film " << pFilm->info.judul << ":" << endl;
         adrRelasi r = pFilm->firstRel;
-        if (r == NULL) cout << "(Kosong)" << endl;
-        while (r != NULL) {
+        if (r == NULL)
+            cout << "(Kosong)" << endl;
+        while (r != NULL)
+        {
             cout << "- " << r->toAktor->info.nama << endl;
             r = r->next;
         }
-    } else {
+    }
+    else
+    {
         cout << "Film tidak ditemukan." << endl;
     }
 }
 
 // Top
 // Tampilkan Aktor paling ketceh
-void showTopAktorDanAktris(ListFilm LF, ListAktor LA) {
+void showTopAktorDanAktris(ListFilm LF, ListAktor LA)
+{
     // Variabel untuk menyimpan pemenang
     adrAktor topAktor = NULL;
     adrAktor topAktris = NULL;
@@ -455,16 +523,20 @@ void showTopAktorDanAktris(ListFilm LF, ListAktor LA) {
     int maxAktris = -1;
 
     adrAktor pA = LA.first;
-    while (pA != NULL) {
+    while (pA != NULL)
+    {
         // Hitung berapa film yg dia bintangi
         int count = 0;
-        
+
         // Loop semua film untuk cek relasi (Manual count)
         adrFilm pF = LF.first;
-        while (pF != NULL) {
+        while (pF != NULL)
+        {
             adrRelasi r = pF->firstRel;
-            while (r != NULL) {
-                if (r->toAktor == pA) {
+            while (r != NULL)
+            {
+                if (r->toAktor == pA)
+                {
                     count++;
                     break;
                 }
@@ -474,13 +546,18 @@ void showTopAktorDanAktris(ListFilm LF, ListAktor LA) {
         }
 
         // Cek Max Logic
-        if (pA->info.gender == 'F' || pA->info.gender == 'f') { // Cewek
-            if (count > maxAktris) {
+        if (pA->info.gender == 'F' || pA->info.gender == 'f')
+        { // Cewek
+            if (count > maxAktris)
+            {
                 maxAktris = count;
                 topAktris = pA;
             }
-        } else { // Cowok
-            if (count > maxAktor) {
+        }
+        else
+        { // Cowok
+            if (count > maxAktor)
+            {
                 maxAktor = count;
                 topAktor = pA;
             }
@@ -489,13 +566,42 @@ void showTopAktorDanAktris(ListFilm LF, ListAktor LA) {
     }
 
     cout << "=== TOP ARTIS ===" << endl;
-    if (topAktor) 
+    if (topAktor)
         cout << "Top Aktor  : " << topAktor->info.nama << " (Main di " << maxAktor << " film)" << endl;
-    else 
+    else
         cout << "Top Aktor  : -" << endl;
 
-    if (topAktris) 
+    if (topAktris)
         cout << "Top Aktris : " << topAktris->info.nama << " (Main di " << maxAktris << " film)" << endl;
-    else 
+    else
         cout << "Top Aktris : -" << endl;
+}
+
+// Fungsi Tambahan untuk generate ID agar tidak ada ID yang sama
+// Generate id aktor
+int generateAktorId(ListAktor LA)
+{
+    int mx = 0;
+    adrAktor p = LA.first;
+    while (p != NULL)
+    {
+        if (p->info.id > mx)
+            mx = p->info.id;
+        p = p->next;
+    }
+    return mx + 1;
+}
+
+// Generate id Film
+int generateFilmId(ListFilm LF)
+{
+    int mx = 0;
+    adrFilm p = LF.first;
+    while (p != NULL)
+    {
+        if (p->info.id > mx)
+            mx = p->info.id;
+        p = p->next;
+    }
+    return mx + 1;
 }

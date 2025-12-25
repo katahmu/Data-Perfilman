@@ -42,7 +42,7 @@ int main()
             cout << "ID Aktor : " << a.id << endl;
             cout << "Nama Aktor (contoh: Dion_Wiyoko): ";
             cin >> a.nama;
-            cout << "Agensi (contoh: Warner_Bros): ";
+            cout << "Agensi (contoh: Avatara88_Artists_Management): ";
             cin >> a.agensi;
             cout << "Umur (contoh: 30): ";
             cin >> a.umur;

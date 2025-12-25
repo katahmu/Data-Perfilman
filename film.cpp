@@ -106,6 +106,21 @@ void deleteLastAktor(ListAktor &LA, adrAktor &p)
     }
 }
 
+// Cari Aktor berdasarkan Id
+adrAktor findAktorById(ListAktor LA, int idAktor)
+{
+    adrAktor p = LA.first;
+    while (p != NULL)
+    {
+        if (p->info.id == idAktor)
+        {
+            return p;
+        }
+        p = p->next;
+    }
+    return NULL;
+}
+
 // Hapus Aktor berdasrkan Id
 void deleteAktorById(ListAktor &LA, ListFilm &LF, int idAktor)
 {
@@ -138,20 +153,6 @@ void deleteAktorById(ListAktor &LA, ListFilm &LF, int idAktor)
     }
 }
 
-// Cari Aktor berdasarkan Id
-adrAktor findAktorById(ListAktor LA, int idAktor)
-{
-    adrAktor p = LA.first;
-    while (p != NULL)
-    {
-        if (p->info.id == idAktor)
-        {
-            return p;
-        }
-        p = p->next;
-    }
-    return NULL;
-}
 
 // Tampilkan semua aktor
 void showAllAktor(ListAktor LA)
@@ -241,6 +242,21 @@ void deleteLastFilm(ListFilm &LF, adrFilm &p)
     }
 }
 
+// Cari Film berdasarkan Id
+adrFilm findFilmById(ListFilm LF, int idFilm)
+{
+    adrFilm p = LF.first;
+    while (p != NULL)
+    {
+        if (p->info.id == idFilm)
+        {
+            return p;
+        }
+        p = p->next;
+    }
+    return NULL;
+}
+
 // Hapus Film berdasarkan Id
 void deleteFilmById(ListFilm &LF, int idFilm)
 {
@@ -277,20 +293,7 @@ void deleteFilmById(ListFilm &LF, int idFilm)
     }
 }
 
-// Cari Film berdasarkan Id
-adrFilm findFilmById(ListFilm LF, int idFilm)
-{
-    adrFilm p = LF.first;
-    while (p != NULL)
-    {
-        if (p->info.id == idFilm)
-        {
-            return p;
-        }
-        p = p->next;
-    }
-    return NULL;
-}
+
 
 // Tampilkan Semua Film
 void showAllFilm(ListFilm LF)
@@ -581,27 +584,27 @@ void showTopAktorDanAktris(ListFilm LF, ListAktor LA)
 // Generate id aktor
 int generateAktorId(ListAktor LA)
 {
-    int mx = 0;
+    int lastId = 0;
     adrAktor p = LA.first;
     while (p != NULL)
     {
-        if (p->info.id > mx)
-            mx = p->info.id;
+        if (p->info.id > lastId)
+            lastId = p->info.id;
         p = p->next;
     }
-    return mx + 1;
+    return lastId + 1;
 }
 
 // Generate id Film
 int generateFilmId(ListFilm LF)
 {
-    int mx = 0;
+    int lastId = 0;
     adrFilm p = LF.first;
     while (p != NULL)
     {
-        if (p->info.id > mx)
-            mx = p->info.id;
+        if (p->info.id > lastId)
+            lastId = p->info.id;
         p = p->next;
     }
-    return mx + 1;
+    return lastId + 1;
 }
